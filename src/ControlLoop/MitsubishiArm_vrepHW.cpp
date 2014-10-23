@@ -1,4 +1,4 @@
-#include "MyRobot_vrepHW.h"
+#include "MitsubishiArm_vrepHW.h"
 
 #include "../v_repLib.h"
 
@@ -11,7 +11,7 @@ namespace MR
 
 
 // Joint names in V-REP
-std::string MyRobot_vrepHW::sm_jointsName[MR_JOINTS_NUM] = {
+std::string MitsubishiArm_vrepHW::sm_jointsName[ROBOT_JOINTS_NUM] = {
     "j1",
     "j2",
     "j3",
@@ -22,11 +22,11 @@ std::string MyRobot_vrepHW::sm_jointsName[MR_JOINTS_NUM] = {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-MyRobot_vrepHW::MyRobot_vrepHW() :
+MitsubishiArm_vrepHW::MitsubishiArm_vrepHW() :
     hardware_interface::RobotHW()
 {
     // Init arrays m_cmd[], m_pos[], m_vel[], m_eff[].
-    for (int i = 0; i < MR_JOINTS_NUM; ++i)
+    for (int i = 0; i < ROBOT_JOINTS_NUM; ++i)
     {
         m_cmd[i] = 0.0;
         m_pos[i] = 0.0;
@@ -35,7 +35,7 @@ MyRobot_vrepHW::MyRobot_vrepHW() :
     }
 
     // Init and get handles of the joints to control.
-    for (int i = 0; i < MR_JOINTS_NUM; ++i)
+    for (int i = 0; i < ROBOT_JOINTS_NUM; ++i)
         m_vrepJointsHandle[i] = -1;
 
     // Register joint interfaces.
@@ -43,10 +43,10 @@ MyRobot_vrepHW::MyRobot_vrepHW() :
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool MyRobot_vrepHW::init()
+bool MitsubishiArm_vrepHW::init()
 {
     // Get joint handles.
-    for (int i = 0; i < MR_JOINTS_NUM; ++i)
+    for (int i = 0; i < ROBOT_JOINTS_NUM; ++i)
     {
         int vrepJointsHandle = simGetObjectHandle(sm_jointsName[i].c_str());
 
@@ -65,15 +65,15 @@ bool MyRobot_vrepHW::init()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void MyRobot_vrepHW::registerHardwareInterfaces()
+void MitsubishiArm_vrepHW::registerHardwareInterfaces()
 {
-    for (int i = 0; i < MR_JOINTS_NUM; ++i)
+    for (int i = 0; i < ROBOT_JOINTS_NUM; ++i)
     {
         // Joint state interface.
         hardware_interface::JointStateHandle jointStateHandle(sm_jointsName[i], &m_pos[i], &m_vel[i], &m_eff[i]);
         m_jointState_interface.registerHandle(jointStateHandle);
 
-        // Joint command interface (in MyRobot's case this is a velocity interface).
+        // Joint command interface
         hardware_interface::JointHandle jointPositionHandle(jointStateHandle, &m_cmd[i]);
         m_jointPosition_interface.registerHandle(jointPositionHandle);
     }
@@ -83,9 +83,9 @@ void MyRobot_vrepHW::registerHardwareInterfaces()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool MyRobot_vrepHW::read()
+bool MitsubishiArm_vrepHW::read()
 {
-    for (int i = 0; i < MR_JOINTS_NUM; ++i)
+    for (int i = 0; i < ROBOT_JOINTS_NUM; ++i)
     {
         float pos;
 
@@ -105,9 +105,9 @@ bool MyRobot_vrepHW::read()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool MyRobot_vrepHW::write()
+bool MitsubishiArm_vrepHW::write()
 {
-    for (int i = 0; i < MR_JOINTS_NUM; ++i)
+    for (int i = 0; i < ROBOT_JOINTS_NUM; ++i)
     {
         if (simSetJointPosition(m_vrepJointsHandle[i], m_cmd[i]) == -1)
         {

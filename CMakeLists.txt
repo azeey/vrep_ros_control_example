@@ -12,14 +12,14 @@ set(${PROJECT_NAME}_headers
     src/v_repTypes.h
     src/ControlLoop/vrepRosControl_server.h
     src/ControlLoop/vrepRosControl_plugin.h
-    src/ControlLoop/MyRobot_vrepHW.h
+    src/ControlLoop/MitsubishiArm_vrepHW.h
 )
 
 set(${PROJECT_NAME}_sources
     src/v_repLib.cpp
     src/ControlLoop/vrepRosControl_server.cpp
     src/ControlLoop/vrepRosControl_plugin.cpp
-    src/ControlLoop/MyRobot_vrepHW.cpp
+    src/ControlLoop/MitsubishiArm_vrepHW.cpp
 )
 
 catkin_package(

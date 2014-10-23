@@ -6,11 +6,11 @@ import actionlib
 from control_msgs.msg import *
 from trajectory_msgs.msg import *
 
-JOINT_NAMES = ['front_left_wheel_joint', 'back_left_wheel_joint', 'back_right_wheel_joint', 'front_right_wheel_joint']
+JOINT_NAMES = ['j1', 'j2', 'j3', 'j4', 'j5','j6']
 
 Q1_ANGLE = 1.5708
-Q0 = [0, 0, 0, 0]
-Q1 = [Q1_ANGLE, Q1_ANGLE, Q1_ANGLE, Q1_ANGLE]
+Q0 = [0, 0, 0, 0, 0, 0]
+Q1 = [Q1_ANGLE, 0, 0, 0, 0, 0]
 
 client = None
 
