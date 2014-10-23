@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find vrep_ros_control_example)/urdf/MyRobot.urdf.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find mitsubishi_arm_description)/robots/mitsubishi_rv_6sdl.urdf.xacro'" />
 
   <!-- Robot state publisher node -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
@@ -12,6 +12,7 @@
   <!-- Start controllers -->
   <rosparam file="$(find vrep_ros_control_example)/control/mr_controller.yaml" command="load"/> <!-- Joint trajectory controller (this is not a low-level controller) -->
 
-  <node name="controller_manager_spawner" pkg="controller_manager" type="spawner" args="mr_controller" />
+  <node name="controller_manager_spawner" pkg="controller_manager" type="spawner" args="mr_controller
+    joint_state_controller" />
 
 </launch>

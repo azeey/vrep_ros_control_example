@@ -11,10 +11,12 @@ namespace MR
 
 enum MrJointsEnum
 {
-    FRONT_LEFT_WHEEL_JOINT = 0,
-    BACK_LEFT_WHEEL_JOINT,
-    BACK_RIGHT_WHEEL_JOINT,
-    FRONT_RIGHT_WHEEL_JOINT,
+    J1 = 0,
+    J2,
+    J3,
+    J4,
+    J5,
+    J6,
 
     MR_JOINTS_NUM
 };
@@ -45,7 +47,7 @@ protected:
     double m_eff[MR_JOINTS_NUM];
 
     hardware_interface::JointStateInterface m_jointState_interface;
-    hardware_interface::VelocityJointInterface m_jointVelocity_interface;
+    hardware_interface::PositionJointInterface m_jointPosition_interface;
 
     void registerHardwareInterfaces();
 };
