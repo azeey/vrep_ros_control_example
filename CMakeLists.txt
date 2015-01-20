@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(vrep_ros_control_example)
+project(vrep_ros_mitsubishi_arm)
 
 find_package(catkin REQUIRED COMPONENTS roscpp vrep_common controller_manager)
 

@@ -7,9 +7,6 @@
 
 ros::NodeHandle* ROS_server::sm_node = NULL;
 
-// Services:
-ros::ServiceServer ROS_server::sm_displayText_server;
-
 // Publishers:
 ros::Publisher ROS_server::sm_objectCount_publisher;
 
@@ -34,7 +31,7 @@ bool ROS_server::initialize()
 	if(!ros::master::check())
 		return(false);
 	
-    sm_node = new ros::NodeHandle;
+    sm_node = new ros::NodeHandle("mitsubishi_arm");
     assert(sm_node);
 
     // Control.
@@ -61,8 +58,6 @@ bool ROS_server::initialize()
     assert(sm_spinner);
     sm_spinner->start();
 
-	// Enable the services:
-    sm_displayText_server = sm_node->advertiseService("displayText",ROS_server::displayText_service);
 
 	// Enable the publishers:
     sm_objectCount_publisher = sm_node->advertise<std_msgs::Int32>("objectCount",1);
@@ -92,9 +87,6 @@ void ROS_server::shutDown()
 
 	// Disable the publishers:
     sm_objectCount_publisher.shutdown();
-
-	// Disable the services:
-    sm_displayText_server.shutdown();
 
 	// Shut down:
 	ros::shutdown();
@@ -166,13 +158,6 @@ void ROS_server::spinOnce()
     simSetIntegerParameter(sim_intparam_error_report_mode,errorModeSaved);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Services:
-bool ROS_server::displayText_service(vrep_skeleton_msg_and_srv::displayText::Request &req,vrep_skeleton_msg_and_srv::displayText::Response &res)
-{
-	res.dialogHandle=simDisplayDialog("Message from a ROS node",req.textToDisplay.c_str(),sim_dlgstyle_message,NULL,NULL,NULL,NULL);
-	return true;
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Publishers:

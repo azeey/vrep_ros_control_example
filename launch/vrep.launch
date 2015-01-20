@@ -4,15 +4,16 @@
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find mitsubishi_arm_description)/robots/mitsubishi_rv_6sdl.urdf.xacro'" />
 
   <!-- Robot state publisher node -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/mitsubishi_arm/joint_states" />
     <param name="publish_frequency" type="double" value="50.0" />
     <param name="tf_prefix" type="string" value="" />
   </node>
 
   <!-- Start controllers -->
-  <rosparam file="$(find vrep_ros_control_example)/control/mr_controller.yaml" command="load"/> <!-- Joint trajectory controller (this is not a low-level controller) -->
+  <rosparam file="$(find vrep_ros_mitsubishi_arm)/control/mitsubishi_arm_controller.yaml" command="load"/> <!-- Joint trajectory controller (this is not a low-level controller) -->
 
-  <node name="controller_manager_spawner" pkg="controller_manager" type="spawner" args="mr_controller
-    joint_state_controller" />
+  <node ns="/mitsubishi_arm" pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false" output="screen" args="joint_state_controller mitsubishi_trajectory_controller"/>
 
+  <!-- convert joint states to TF transforms for rviz, etc -->
 </launch>

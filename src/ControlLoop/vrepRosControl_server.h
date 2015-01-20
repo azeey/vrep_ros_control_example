@@ -4,9 +4,6 @@
 #include <std_msgs/Int32.h>
 #include <std_msgs/String.h>
 
-// API services:
-#include "vrep_skeleton_msg_and_srv/displayText.h"
-
 namespace MR
 {
 class MitsubishiArm_vrepHW;
@@ -41,9 +38,6 @@ private:
 
     static void spinOnce();
 
-    // Services:
-    static bool displayText_service(vrep_skeleton_msg_and_srv::displayText::Request &req,vrep_skeleton_msg_and_srv::displayText::Response &res);
-    static ros::ServiceServer sm_displayText_server;
 
     // Publishers:
     static void streamAllData();
